@@ -1,16 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
-        <id>SocketHttpListener</id>
-        <version>1.0.0.44</version>
-        <title>SocketHttpListener</title>
-        <authors>Emby Team</authors>
-        <owners>ebr,Luke,scottisafool</owners>
-        <projectUrl>https://github.com/MediaBrowser/SocketHttpListener</projectUrl>
-        <iconUrl>http://www.mb3admin.com/images/mb3icons1-1.png</iconUrl>
+        <id>tekhedd.SocketHttpListener</id>
+        <version>1.0.0</version>
+        <title>tekhedd.SocketHttpListener</title>
+        <authors>Emby Team, the mono project authors, and others</authors>
+        <owners>tekhedd</owners>
+        <projectUrl>https://github.com/tekhedd/SocketHttpListener</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>A standalone HttpListener with support for SSL, WebSockets and Mono.</description>
-        <copyright>Copyright © Emby 2013</copyright>
+        <description>A version of SocketHttpListener, a standalone HttpListener with support 
+            for SSL, WebSockets and Mono. TimeoutSocketHttpListener adds support for socket
+            timeouts, and otherwise maintains API compatibilty, and otherwise tracks the upstream
+            SocketHttpListener code.
+        </description>
+        <copyright>Copyright © Emby 2013 and others.</copyright>
         <dependencies>
             <dependency id="Patterns.Logging" version="1.0.0.6" />
         </dependencies>
