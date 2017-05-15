@@ -8,11 +8,12 @@
         <owners>tekhedd</owners>
         <projectUrl>https://github.com/tekhedd/SocketHttpListener</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>A version of SocketHttpListener, a standalone HttpListener with support 
-            for SSL, WebSockets and Mono. TimeoutSocketHttpListener adds support for socket
-            timeouts, and otherwise maintains API compatibilty, and otherwise tracks the upstream
-            SocketHttpListener code.
-        </description>
+        <description>A fork of SocketHttpListener that adds socket timeout support.</description>
+        <summary>Emby's SocketHttpListener is a standalone HttpListener with support 
+            for SSL, WebSockets and Mono. tekedd.SocketHttpListener adds support for socket
+            timeouts. It otherwise maintains API compatibilty, and follows the upstream
+            SocketHttpListener code as time permits.
+        </summary>
         <copyright>Copyright © Emby 2013 and others.</copyright>
         <dependencies>
             <dependency id="Patterns.Logging" version="1.0.0.6" />
