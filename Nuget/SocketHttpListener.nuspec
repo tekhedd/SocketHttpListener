@@ -14,11 +14,11 @@
             timeouts. It otherwise maintains API compatibilty, and follows the upstream
             SocketHttpListener code as time permits.
         </summary>
-        <copyright>Copyright © Emby 2013 and others 2013-2018</copyright>
+        <copyright>Copyright © Emby and others 2013-2018</copyright>
         <dependencies>
         </dependencies>
     </metadata>
     <files>
-        <file src="dlls\SocketHttpListener.dll" target="lib\net45\SocketHttpListener.dll" />
+        <file src="../SocketHttpListener/bin/Release/SocketHttpListener.dll" target="lib/net45/SocketHttpListener.dll" />
     </files>
 </package>
