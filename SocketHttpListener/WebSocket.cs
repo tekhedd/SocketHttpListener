@@ -357,8 +357,9 @@ namespace SocketHttpListener
                 }
                 OnError.Emit(this, new ErrorEventArgs(message));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+               // Do nothing
             }
         }
 
@@ -368,8 +369,9 @@ namespace SocketHttpListener
             {
                 OnError.Emit(this, new ErrorEventArgs(message));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+               // Do nothing
             }
         }
 

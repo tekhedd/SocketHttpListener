@@ -1,14 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
-using System.Security.Authentication;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading;
-using Patterns.Logging;
 
 namespace SocketHttpListener.Net
 {
@@ -37,9 +34,9 @@ namespace SocketHttpListener.Net
         X509Certificate cert;
         SslStream ssl_stream;
 
-        private ILogger _logger;
+        private TraceSource _logger;
 
-        public HttpConnection(ILogger logger, Socket sock, EndPointListener epl, bool secure, X509Certificate cert)
+        public HttpConnection(TraceSource logger, Socket sock, EndPointListener epl, bool secure, X509Certificate cert)
         {
             _logger = logger;
             this.sock = sock;

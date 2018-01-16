@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Patterns.Logging;
+using System.Diagnostics;
 
 namespace SocketHttpListener.Net
 {
@@ -10,9 +10,9 @@ namespace SocketHttpListener.Net
         List<string> prefixes = new List<string>();
         HttpListener listener;
 
-        private ILogger _logger;
+        private TraceSource _logger;
 
-        internal HttpListenerPrefixCollection(ILogger logger, HttpListener listener)
+        internal HttpListenerPrefixCollection(TraceSource logger, HttpListener listener)
         {
             _logger = logger;
             this.listener = listener;

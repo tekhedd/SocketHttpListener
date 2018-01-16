@@ -1,7 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Security.Principal;
-using Patterns.Logging;
 using SocketHttpListener.Net.WebSockets;
 
 namespace SocketHttpListener.Net
@@ -15,9 +15,9 @@ namespace SocketHttpListener.Net
         string error;
         int err_status = 400;
         internal HttpListener Listener;
-        private readonly ILogger _logger;
+        private readonly TraceSource _logger;
 
-        internal HttpListenerContext(HttpConnection cnc, ILogger logger)
+        internal HttpListenerContext(HttpConnection cnc, TraceSource logger)
         {
             this.cnc = cnc;
             _logger = logger;

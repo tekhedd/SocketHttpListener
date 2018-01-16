@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
-using System.Net.Sockets;
 using System.Reflection;
-using Patterns.Logging;
 
 namespace SocketHttpListener.Net
 {
@@ -17,7 +15,7 @@ namespace SocketHttpListener.Net
         {
         }
 
-        public static void AddListener(ILogger logger, HttpListener listener)
+        public static void AddListener(TraceSource logger, HttpListener listener)
         {
             List<string> added = new List<string>();
             try
@@ -41,7 +39,7 @@ namespace SocketHttpListener.Net
             }
         }
 
-        public static void AddPrefix(ILogger logger, string prefix, HttpListener listener)
+        public static void AddPrefix(TraceSource logger, string prefix, HttpListener listener)
         {
             lock (ip_to_endpoints)
             {
@@ -49,7 +47,7 @@ namespace SocketHttpListener.Net
             }
         }
 
-        static void AddPrefixInternal(ILogger logger, string p, HttpListener listener)
+        static void AddPrefixInternal(TraceSource logger, string p, HttpListener listener)
         {
             ListenerPrefix lp = new ListenerPrefix(p);
             if (lp.Path.IndexOf('%') != -1)
@@ -97,7 +95,7 @@ namespace SocketHttpListener.Net
             return SupportsDualMode() ? IPAddress.IPv6Any : IPAddress.Any;
         }
 
-        static EndPointListener GetEPListener(ILogger logger, string host, int port, HttpListener listener, bool secure)
+        static EndPointListener GetEPListener(TraceSource logger, string host, int port, HttpListener listener, bool secure)
         {
             IPAddress addr;
             if (host == "*" || host == "+")
@@ -156,7 +154,7 @@ namespace SocketHttpListener.Net
             }
         }
 
-        public static void RemoveListener(ILogger logger, HttpListener listener)
+        public static void RemoveListener(TraceSource logger, HttpListener listener)
         {
             lock (ip_to_endpoints)
             {
@@ -167,7 +165,7 @@ namespace SocketHttpListener.Net
             }
         }
 
-        public static void RemovePrefix(ILogger logger, string prefix, HttpListener listener)
+        public static void RemovePrefix(TraceSource logger, string prefix, HttpListener listener)
         {
             lock (ip_to_endpoints)
             {
@@ -175,7 +173,7 @@ namespace SocketHttpListener.Net
             }
         }
 
-        static void RemovePrefixInternal(ILogger logger, string prefix, HttpListener listener)
+        static void RemovePrefixInternal(TraceSource logger, string prefix, HttpListener listener)
         {
             ListenerPrefix lp = new ListenerPrefix(prefix);
             if (lp.Path.IndexOf('%') != -1)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -8,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Patterns.Logging;
 using SocketHttpListener.Net.WebSockets;
 using HttpListener = SocketHttpListener.Net.HttpListener;
 
@@ -21,7 +21,6 @@ namespace SocketHttpListener.Test
         
         private static string pfxLocation;
 
-        private Mock<ILogger> logger;
         private HttpListener listener;
         private WebSocket4Net.WebSocket socket;
         private AutoResetEvent serverResetEvent;
@@ -48,11 +47,12 @@ namespace SocketHttpListener.Test
         [TestInitialize]
         public void TestInit()
         {
+            Trace.Listeners.Add( new ConsoleTraceListener() );
+
             this.areEqual = false;
             this.sent = false;
 
-            this.logger = LoggerFactory.CreateLogger();
-            this.listener = new HttpListener(this.logger.Object, pfxLocation);            
+            this.listener = new HttpListener(pfxLocation);            
             
             this.serverResetEvent = new AutoResetEvent(false);
             this.clientResetEvent = new AutoResetEvent(false);
@@ -70,7 +70,6 @@ namespace SocketHttpListener.Test
 
             this.socket.Dispose(); // 0.10 doesn't have this. Comment out to show error.
             ((IDisposable)this.listener).Dispose();
-            this.logger = null;
             this.webSocketContextServer = null;
             this.areEqual = false;
             this.sent = false;
@@ -173,19 +172,19 @@ namespace SocketHttpListener.Test
 
             this.socket.Closed += (sender, args) =>
             {
-                this.logger.Object.Info("Socket Closed");
+                Trace.TraceInformation("Socket Closed");
                 this.clientResetEvent.Set();
             };
 
             this.socket.Opened += (sender, args) =>
             {
-                this.logger.Object.Info("Socket Opened");
+                Trace.TraceInformation("Socket Opened");
                 this.clientResetEvent.Set();
             };
 
             this.socket.MessageReceived += (sender, args) =>
             {
-                this.logger.Object.Info("Got Message");
+                Trace.TraceInformation("Got Message");
 
                 this.areEqual = string.Compare(expectedResult, args.Message, StringComparison.Ordinal) == 0;
                 this.clientResetEvent.Set();
@@ -193,7 +192,7 @@ namespace SocketHttpListener.Test
 
             this.socket.DataReceived += (sender, args) =>
             {
-                this.logger.Object.Info("Got Data");
+                Trace.TraceInformation("Got Data");
 
                 this.areEqual = string.Compare(expectedResult, Encoding.UTF8.GetString(args.Data), StringComparison.Ordinal) == 0;
                 this.clientResetEvent.Set();
@@ -213,7 +212,7 @@ namespace SocketHttpListener.Test
 
             this.listener.OnContext += context =>
             {
-                this.logger.Object.Info("Accepting connection.");
+                Trace.TraceInformation("Accepting connection.");
 
                 this.webSocketContextServer = context.AcceptWebSocket(null);
                 this.webSocketContextServer.WebSocket.ConnectAsServer();

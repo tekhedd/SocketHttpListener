@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -8,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Patterns.Logging;
 using HttpListener = SocketHttpListener.Net.HttpListener;
 
 namespace SocketHttpListener.Test
@@ -20,7 +20,6 @@ namespace SocketHttpListener.Test
         
         private static string pfxLocation;
 
-        private Mock<ILogger> logger;
         private HttpListener listener;
         private HttpClient httpClient;
 
@@ -42,7 +41,6 @@ namespace SocketHttpListener.Test
         [TestInitialize]
         public void TestInit()
         {
-            this.logger = LoggerFactory.CreateLogger();            
             this.httpClient = new HttpClient();
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
@@ -53,7 +51,6 @@ namespace SocketHttpListener.Test
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => false;
 
-            this.logger = null;
             ((IDisposable)this.listener).Dispose();
             this.httpClient.Dispose();            
         }
@@ -132,7 +129,7 @@ namespace SocketHttpListener.Test
 
         private void CreateListener(string pfxLocationLocal)
         {
-            this.listener = new HttpListener(this.logger.Object, pfxLocationLocal);
+            this.listener = new HttpListener(pfxLocationLocal);
         }
 
         private async Task TestListenAndConnect(string prefix)

@@ -1,9 +1,9 @@
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
-using Patterns.Logging;
 
 namespace SocketHttpListener.Net
 {
@@ -30,9 +30,9 @@ namespace SocketHttpListener.Net
 
         bool force_close_chunked;
 
-        private readonly ILogger _logger;
+        private readonly TraceSource _logger;
 
-        internal HttpListenerResponse(HttpListenerContext context, ILogger logger)
+        internal HttpListenerResponse(HttpListenerContext context, TraceSource logger)
         {
             this.context = context;
             _logger = logger;

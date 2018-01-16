@@ -1,8 +1,7 @@
-// TODO: Logging.
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Patterns.Logging;
+using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Net;
@@ -11,6 +10,8 @@ namespace SocketHttpListener.Net
 {
     public sealed class HttpListener : IDisposable
     {
+        const string DEFAULT_TRACE_SOURCE_NAME = "SocketHttpListener";
+        
         AuthenticationSchemes auth_schemes;
         HttpListenerPrefixCollection prefixes;
         AuthenticationSchemeSelector auth_selector;
@@ -22,17 +23,17 @@ namespace SocketHttpListener.Net
 
         Dictionary<HttpListenerContext, HttpListenerContext> registry;   // Dictionary<HttpListenerContext,HttpListenerContext> 
         Dictionary<HttpConnection, HttpConnection> connections;
-        private ILogger _logger;
+        private TraceSource _logger;
         private X509Certificate2 _certificate;
 
         public Action<HttpListenerContext> OnContext { get; set; }
 
         public HttpListener()
-            : this(new NullLogger())
+            : this(new TraceSource(DEFAULT_TRACE_SOURCE_NAME, SourceLevels.All))
         {
         }
 
-        public HttpListener(ILogger logger)
+        public HttpListener(TraceSource logger)
         {
             _logger = logger;
             prefixes = new HttpListenerPrefixCollection(logger, this);
@@ -42,22 +43,22 @@ namespace SocketHttpListener.Net
         }
 
         public HttpListener(X509Certificate2 certificate)
-            :this(new NullLogger(), certificate)
+            :this(new TraceSource(DEFAULT_TRACE_SOURCE_NAME, SourceLevels.All), certificate)
         {
         }
 
         public HttpListener(string certificateLocation)
-            : this(new NullLogger(), certificateLocation)
+            : this(new TraceSource(DEFAULT_TRACE_SOURCE_NAME, SourceLevels.All), certificateLocation)
         {
         }
 
-        public HttpListener(ILogger logger, X509Certificate2 certificate)
+        public HttpListener(TraceSource logger, X509Certificate2 certificate)
             : this(logger)
         {
             _certificate = certificate;
         }
 
-        public HttpListener(ILogger logger, string certificateLocation)
+        public HttpListener(TraceSource logger, string certificateLocation)
             :this(logger)
         {
             LoadCertificateAndKey(certificateLocation);

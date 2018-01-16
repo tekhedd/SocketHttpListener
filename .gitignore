@@ -8,6 +8,7 @@
 # User-specific files
 *.suo
 *.user
+*.userprefs
 *.sln.docstates
 
 # Build results
@@ -105,11 +106,10 @@ publish/
 *.Publish.xml
 *.pubxml
 
-# NuGet Packages Directory
-## TODO: If you have NuGet Package Restore enabled, uncomment the next line
-# packages/
-dlls/
-dllssigned/
+# NuGet Packages Directory and output
+packages/
+Nuget/*.nupkg
+Nuget/dlls
 
 # Windows Azure Build Output
 csx

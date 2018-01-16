@@ -1,8 +1,6 @@
-using Patterns.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
@@ -21,11 +19,11 @@ namespace SocketHttpListener.Net
         X509Certificate cert;
         bool secure;
         Dictionary<HttpConnection, HttpConnection> unregistered;
-        private readonly ILogger _logger;
+        private readonly TraceSource _logger;
         private bool _closed;
         private readonly bool _enableDualMode;
 
-        public EndPointListener(HttpListener listener, IPAddress addr, int port, bool secure, X509Certificate cert, ILogger logger)
+        public EndPointListener(HttpListener listener, IPAddress addr, int port, bool secure, X509Certificate cert, TraceSource logger)
         {
             this.listener = listener;
             _logger = logger;
